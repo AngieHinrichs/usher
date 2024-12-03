@@ -22,14 +22,12 @@ tar -xvzf tbb2019_20191006oss_mac.tgz
 cmake -DTBB_DIR=${PWD}/tbb2019_20191006oss -DCMAKE_PREFIX_PATH=${PWD}/tbb2019_20191006oss/cmake ..
 arch=$(uname -m)
 echo "uname -m is '$arch'"
-if [[ "$arch" == "arm64" ]]; then
-    # can't build ripples-fast because it uses x86_64 machine instructions
-    make -j2 VERBOSE=1 usher matUtils usher-sampled ripples ripplesUtils ripplesInit matOptimize \
-        compareVCF output_final_protobuf transpose_vcf transposed_vcf_to_vcf transposed_vcf_to_fa \
-        transposed_vcf_print_name
-else
-    make -j2 VERBOSE=1
-fi
+# can't build ripples-fast because it uses GNU Built-in Functions
+# (https://gcc.gnu.org/onlinedocs/gcc-5.3.0/gcc/x86-Built-in-Functions.html)
+# but compiler is Clang on github macos-13 runner
+make -j2 VERBOSE=1 usher matUtils usher-sampled ripples ripplesUtils ripplesInit matOptimize \
+    compareVCF output_final_protobuf transpose_vcf transposed_vcf_to_vcf transposed_vcf_to_fa \
+    transposed_vcf_print_name
 
 # install faToVcf
 rsync -aP rsync://hgdownload.soe.ucsc.edu/genome/admin/exe/macOSX.x86_64/faToVcf .
