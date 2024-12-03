@@ -20,7 +20,14 @@ tar -xvzf tbb2019_20191006oss_mac.tgz
 
 # Build UShER
 cmake -DTBB_DIR=${PWD}/tbb2019_20191006oss -DCMAKE_PREFIX_PATH=${PWD}/tbb2019_20191006oss/cmake ..
-make -j2 VERBOSE=1
+if [[ $(uname -m) == "arm64" ]]; then
+    # can't build ripples-fast because it uses x86_64 machine instructions
+    make -j2 VERBOSE=1 usher matUtils usher-sampled ripples ripplesUtils ripplesInit matOptimize \
+        compareVCF output_final_protobuf transpose_vcf transposed_vcf_to_vcf transposed_vcf_to_fa \
+        transposed_vcf_print_name
+else
+    make -j2 VERBOSE=1
+fi
 
 # install faToVcf
 rsync -aP rsync://hgdownload.soe.ucsc.edu/genome/admin/exe/macOSX.x86_64/faToVcf .
