@@ -1,7 +1,5 @@
 brew install cmake boost@1.76 protobuf wget rsync openmpi libtool automake autoconf nasm
-# For finding boost@1.76, hopefully:
-export LDFLAGS="-L/usr/local/opt/boost@1.76/lib"
-export CPPFLAGS="-I/usr/local/opt/boost@1.76/include"
+export Boost_INCLUDE_DIR=/usr/local/opt/boost@1.76/include
 
 wget https://github.com/intel/isa-l/archive/refs/tags/v2.30.0.tar.gz
 tar -xvf v2.30.0.tar.gz
@@ -23,7 +21,7 @@ wget https://github.com/oneapi-src/oneTBB/releases/download/2019_U9/tbb2019_2019
 tar -xvzf tbb2019_20191006oss_mac.tgz
 
 # Build UShER
-cmake -DTBB_DIR=${PWD}/tbb2019_20191006oss -DCMAKE_PREFIX_PATH=${PWD}/tbb2019_20191006oss/cmake ..
+cmake -DTBB_DIR=${PWD}/tbb2019_20191006oss -DCMAKE_PREFIX_PATH=${PWD}/tbb2019_20191006oss/cmake -DBoost_INCLUDE_DIR=$Boost_INCLUDE_DIR ..
 arch=$(uname -m)
 echo "uname -m is '$arch'"
 # can't build ripples-fast because it uses GNU Built-in Functions
