@@ -44,7 +44,7 @@ message placed_target{
     uint64 sample_id=9;
 }
 
-message target{
+message place_target{
     uint64 target_node_id=1;
     uint64 parent_node_id=2;
     repeated int32 sample_mutation_positions=3;
@@ -58,7 +58,7 @@ message target{
 
 message search_result{
     uint64 sample_id=1;
-    repeated target place_targets=2;
+    repeated place_target place_targets=2;
 }
 
 message mutation_at_each_pos{
