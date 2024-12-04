@@ -1,4 +1,8 @@
 brew install cmake boost@1.76 protobuf wget rsync openmpi libtool automake autoconf nasm
+# For finding boost@1.76, hopefully:
+export LDFLAGS="-L/usr/local/opt/boost@1.76/lib"
+export CPPFLAGS="-I/usr/local/opt/boost@1.76/include"
+
 wget https://github.com/intel/isa-l/archive/refs/tags/v2.30.0.tar.gz
 tar -xvf v2.30.0.tar.gz
 pushd isa-l-2.30.0
