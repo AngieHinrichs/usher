@@ -39,10 +39,11 @@ find_package(MPI REQUIRED)
 include_directories(SYSTEM ${MPI_INCLUDE_PATH})
 include_directories(${Protobuf_INCLUDE_DIRS})
 
-#include(${TBB_DIR}/cmake/TBBBuild.cmake)
-#tbb_build(TBB_ROOT ${TBB_DIR} CONFIG_DIR TBB_DIR MAKE_ARGS tbb_cpf=1)
-
-find_package(tbb REQUIRED tbbmalloc tbbmalloc_proxy tbb_preview)
+if(DEFINED TBB_DIR)
+    include(${TBB_DIR}/cmake/TBBBuild.cmake)
+    tbb_build(TBB_ROOT ${TBB_DIR} CONFIG_DIR TBB_DIR MAKE_ARGS tbb_cpf=1)
+endif()
+find_package(TBB REQUIRED tbbmalloc tbbmalloc_proxy tbb_preview)
 
 FIND_PACKAGE(Boost COMPONENTS program_options iostreams filesystem date_time REQUIRED)
 
