@@ -1,19 +1,18 @@
-brew install cmake boost protobuf wget rsync openmpi libtool automake autoconf nasm isa-l
+arch=$(uname -m)
+echo "uname -m is '$arch'"
+set -beEu -o pipefail
+
+brew install cmake boost protobuf wget rsync openmpi libtool automake autoconf nasm isa-l tbb
 
 # create build directory
-startDir=$pwd
+startDir=$PWD
 cd $(dirname "$0")
 mkdir -p ../build
 cd ../build
 
-# TBB
-wget https://github.com/oneapi-src/oneTBB/releases/download/2019_U9/tbb2019_20191006oss_mac.tgz
-tar -xvzf tbb2019_20191006oss_mac.tgz
-
 # Build UShER
-cmake -DTBB_DIR=${PWD}/tbb2019_20191006oss -DCMAKE_PREFIX_PATH=${PWD}/tbb2019_20191006oss/cmake ..
-arch=$(uname -m)
-echo "uname -m is '$arch'"
+cmake ..
+
 # can't build ripples-fast because it uses GNU Built-in Functions
 # (https://gcc.gnu.org/onlinedocs/gcc-5.3.0/gcc/x86-Built-in-Functions.html)
 # but compiler is Clang on github macos-13 runner
