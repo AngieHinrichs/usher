@@ -44,6 +44,7 @@ if(DEFINED TBB_DIR)
     tbb_build(TBB_ROOT ${TBB_DIR} CONFIG_DIR TBB_DIR MAKE_ARGS tbb_cpf=1)
 endif()
 find_package(TBB REQUIRED tbbmalloc tbbmalloc_proxy tbb_preview)
+find_package(TotalGarbage REQUIRED)
 
 FIND_PACKAGE(Boost COMPONENTS program_options iostreams filesystem date_time REQUIRED)
 
